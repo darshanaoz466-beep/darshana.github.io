@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="description" content="S.M. Darshana | Biomedical Technologist. Bridging Indigenous Health Sciences with Modern Engineering, IoT, Sensors, and Tissue Engineering.">
+    <meta name="keywords" content="Biomedical Engineering, S.M. Darshana, IoT, Arduino, Tissue Engineering, Indigenous Medicine, Sri Lanka, Portfolio">
+    <meta name="author" content="S.M. Darshana">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="S.M. Darshana | Biomedical Technologist">
+    <meta property="og:description" content="Explore the intersection of Indigenous Medicine and Modern Engineering. View my projects in Sensors, IoT, and Medical Instrumentation.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1631558556874-1d14769832e7?q=80&w=1200&auto=format&fit=crop">
+    <meta property="og:url" content="https://darshana-bio.com"> 
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="S.M. Darshana | Biomedical Technologist">
+    <meta property="twitter:description" content="Bridging Indigenous Health Sciences and Modern Engineering. View my academic journey and technical projects.">
+    <meta property="twitter:image" content="https://images.unsplash.com/photo-1631558556874-1d14769832e7?q=80&w=1200&auto=format&fit=crop">
+    <title>S.M. Darshana | Biomedical Technologist</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- THEME VARIABLES --- */
+        :root {
+            --bg-body: transparent;
+            --bg-surface: rgba(255, 255, 255, 0.85); /* Slightly more transparent to show art */
+            --primary: #10b981;       
+            --primary-dark: #047857;
+            --accent: #06b6d4;        
+            --text-main: #064e3b;     
+            --text-body: #1e293b;
+            --border: #dcfce7;
+            --bubble-border: #ef4444; 
+            --shadow: 0 20px 40px -10px rgba(16, 185, 129, 0.15);
+            --gradient-primary: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+            --chat-bg: #ffffff;
+            --chat-user: #e0f2f1;
+            /* Header Variables */
+            --header-bg: linear-gradient(to right, #141E30, #243B55);
+            --header-text: #ffffff;
+            --header-accent: #00f260;
+        }
+
+        [data-theme="dark"] {
+            --bg-body: transparent;
+            --bg-surface: rgba(15, 23, 42, 0.9);
+            --primary: #34d399;
+            --primary-dark: #10b981;
+            --accent: #22d3ee;
+            --text-main: #f0fdf4;
+            --text-body: #e2e8f0;
+            --border: #1e293b;
+            --bubble-border: #f87171;
+            --shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+            --chat-bg: #1e293b;
+            --chat-user: #0f172a;
+            /* Header Variables for Dark Mode */
+            --header-bg: linear-gradient(to right, #000000, #434343);
+            --header-text: #e0e0e0;
+            --header-accent: #0575E6;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s ease; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text-body); overflow-x: hidden; position: relative; }
+        h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; color: var(--text-main); }
+        .text-gradient { background: var(--gradient-primary); -webkit-background-clip: text; color: transparent; }
+
+        /* --- UPDATED BACKGROUND ART (BIO/TECH THEME) --- */
+        .bg-art {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -5;
+            /* Switched to a Green/Bio/Tech abstract image */
+            background-image: url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            /* Removed grayscale to let the Green color shine through */
+            opacity: 0.3; 
+            filter: contrast(1.1) brightness(1.1); 
+            pointer-events: none;
+        }
+        
+        .bg-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -4;
+            /* Added a subtle green tint to the overlay to blend everything */
+            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.6), rgba(16, 185, 129, 0.1));
+            pointer-events: none;
+        }
+        
+        [data-theme="dark"] .bg-art { opacity: 0.25; filter: contrast(1.2); }
+        [data-theme="dark"] .bg-overlay { background: radial-gradient(circle at 50% 50%, rgba(15,23,42,0.7), rgba(15,23,42,0.5)); }
+
+        /* NAV (HEADER) */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 0.8rem 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--header-bg); 
+            z-index: 1000; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-bottom: 2px solid var(--header-accent);
+        }
+        
+        .logo { font-weight: 900; font-size: 1.5rem; color: var(--header-text); display: flex; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .logo i { color: var(--header-accent); font-size: 1.8rem; }
+
+        .nav-links { display: flex; gap: 2.5rem; }
+        .nav-links a { text-decoration: none; color: var(--header-text); font-weight: 600; font-size: 0.95rem; position: relative; padding: 5px 0; transition: color 0.3s; }
+        .nav-links a::after { content: ''; position: absolute; width: 0; height: 3px; display: block; margin-top: 5px; right: 0; background: var(--header-accent); transition: width 0.3s ease, right 0.3s ease; }
+        .nav-links a:hover { color: var(--header-accent); }
+        .nav-links a:hover::after { width: 100%; right: 0; }
+
+        .theme-btn { cursor: pointer; padding: 10px; border-radius: 50%; border: 2px solid var(--header-accent); color: var(--header-text); background: rgba(255, 255, 255, 0.1); transition: all 0.3s; }
+        .theme-btn:hover { background: var(--header-accent); color: #000; }
+
+        /* HERO */
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: space-between; padding: 120px 10% 60px; }
+        .hero-content { max-width: 600px; z-index: 2; }
+        .hero-tag { background: rgba(16, 185, 129, 0.15); color: var(--primary-dark); padding: 8px 18px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; }
+        .hero h1 { font-size: 3.8rem; line-height: 1.1; margin: 25px 0; text-shadow: 0 0 30px rgba(255,255,255,0.5); }
+        .hero p { font-size: 1.15rem; line-height: 1.7; margin-bottom: 30px; opacity: 0.95; font-weight: 500; }
+        
+        .read-more-wrapper { margin-bottom: 30px; }
+        .hidden-content { display: none; padding: 15px; border-left: 4px solid var(--primary); background: var(--bg-surface); border-radius: 0 10px 10px 0; margin-top: 15px; box-shadow: var(--shadow); }
+        .read-btn { background: none; border: none; color: var(--primary); font-weight: 700; cursor: pointer; font-size: 1rem; display: flex; align-items: center; gap: 5px; }
+        
+        .hero-visual { position: relative; width: 450px; height: 450px; display: flex; justify-content: center; align-items: center; }
+        .profile-img { width: 380px; height: 380px; object-fit: cover; border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; animation: morph 8s ease-in-out infinite; border: 6px solid var(--bg-surface); box-shadow: var(--shadow); position: relative; z-index: 2; }
+        .bubble-badge { position: absolute; top: -10px; right: 0; width: 120px; height: 120px; background: var(--bg-surface); border-radius: 50%; border: 4px solid var(--bubble-border); padding: 5px; box-shadow: 0 0 25px rgba(239, 68, 68, 0.5); z-index: 10; animation: float 4s ease-in-out infinite; }
+        .bubble-badge img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+        @keyframes morph { 0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; } 50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        /* --- BUSINESS CARD BADGE STYLES --- */
+        .card-badge {
+            position: absolute;
+            bottom: 20px;       
+            left: -20px;        
+            width: 160px;       
+            height: auto;
+            border-radius: 12px;
+            border: 5px solid var(--bg-surface);
+            box-shadow: var(--shadow);
+            z-index: 20;        
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: white;
+            text-decoration: none;
+        }
+
+        /* Hover Effect */
+        .card-badge:hover { 
+            transform: scale(1.1) rotate(-3deg); 
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .card-badge img { 
+            width: 100%; 
+            display: block; 
+        }
+
+        /* Tooltip Text ("Download Card") */
+        .card-tooltip {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            font-size: 0.7rem;
+            text-align: center;
+            padding: 5px;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: 0.3s ease;
+            font-weight: 700;
+        }
+
+        .card-badge:hover .card-tooltip {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- CORE COMPETENCIES (10 TABS) --- */
+        .section { padding: 100px 10%; position: relative; }
+        .sec-head { text-align: center; margin-bottom: 60px; }
+        .sec-head h2 { font-size: 2.8rem; margin-bottom: 10px; }
+        .line { width: 80px; height: 5px; background: var(--primary); margin: 0 auto; border-radius: 10px; }
+
+        .grid-10 {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .tech-card {
+            background: var(--bg-surface); border-radius: 20px; padding: 25px;
+            border: 1px solid var(--border); display: flex; flex-direction: column;
+            transition: 0.4s; position: relative; overflow: hidden;
+            box-shadow: var(--shadow); height: 100%; backdrop-filter: blur(10px);
+        }
+        .tech-card:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+        .card-img-wrapper { width: 100%; height: 200px; border-radius: 15px; overflow: hidden; margin-bottom: 20px; }
+        .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .tech-card:hover .card-img { transform: scale(1.1); }
+        .tech-card h3 { font-size: 1.4rem; margin-bottom: 10px; color: var(--text-main); font-weight: 700; }
+        .tech-card p { font-size: 1rem; margin-bottom: 20px; opacity: 0.9; line-height: 1.6; flex-grow: 1; font-weight: 500; }
+        .card-btn { background: rgba(16, 185, 129, 0.1); color: var(--primary-dark); border: none; padding: 12px 0; width: 100%; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        .card-btn:hover { background: var(--primary); color: white; }
+
+        /* --- SCROLL ANIMATION CLASSES --- */
+        .hidden-scroll { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .show-scroll { opacity: 1; transform: translateY(0); }
+
+        /* --- MODAL (POPUP) STYLES --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); z-index: 2000; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-content { background: var(--bg-surface); width: 90%; max-width: 600px; border-radius: 25px; padding: 40px; position: relative; transform: translateY(30px); transition: transform 0.3s ease; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); max-height: 85vh; overflow-y: auto; border: 1px solid var(--border); }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+        .close-modal { position: absolute; top: 20px; right: 25px; font-size: 2rem; cursor: pointer; color: var(--text-body); background: none; border: none; }
+        .modal-title { font-size: 2rem; margin-bottom: 5px; color: var(--primary-dark); font-family: 'Outfit'; }
+        .modal-subtitle { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); font-weight: 700; margin-bottom: 25px; }
+        .topic-list { list-style: none; }
+        .topic-list li { margin-bottom: 15px; padding-left: 30px; position: relative; font-size: 1.1rem; line-height: 1.5; }
+        .topic-list li::before { content: "✓"; position: absolute; left: 0; color: var(--primary); font-weight: bold; font-size: 1.2rem; }
+
+        /* JOURNEY */
+        .journey-box { max-width: 800px; margin: 0 auto; }
+        .accord-item { border: 1px solid var(--border); border-radius: 15px; margin-bottom: 15px; overflow: hidden; background: var(--bg-surface); backdrop-filter: blur(10px); }
+        .accord-head { padding: 20px 25px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 1.1rem; }
+        .accord-head:hover { background: rgba(16, 185, 129, 0.05); }
+        .accord-body { max-height: 0; overflow: hidden; padding: 0 25px; transition: 0.4s; color: var(--text-body); }
+        .accord-body.active { padding: 20px 25px; border-top: 1px solid var(--border); max-height: 500px; }
+
+        /* --- COURSE LIBRARY STYLES --- */
+        .course-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex; flex-direction: column;
+            transition: 0.3s;
+            position: relative;
+            backdrop-filter: blur(5px);
+            overflow: hidden;
+        }
+        .course-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+        .course-visual {
+            width: 100%; height: 160px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        .course-visual img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .course-card:hover .course-visual img { transform: scale(1.1); }
+
+        .course-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            width: fit-content;
+        }
+        .badge-bio { background: rgba(16, 185, 129, 0.15); color: var(--primary-dark); }
+        .badge-ict { background: rgba(6, 182, 212, 0.15); color: var(--accent); }
+        .badge-sci { background: rgba(239, 68, 68, 0.15); color: #b91c1c; }
+        
+        .course-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 5px; color: var(--text-main); }
+        .course-desc { font-size: 0.9rem; opacity: 0.8; margin-bottom: 15px; line-height: 1.5; }
+        
+        .learn-list { margin-bottom: 15px; background: rgba(0,0,0,0.02); padding: 10px; border-radius: 8px; }
+        .learn-list h4 { font-size: 0.85rem; text-transform: uppercase; color: var(--text-main); margin-bottom: 5px; }
+        .learn-list ul { padding-left: 20px; font-size: 0.85rem; color: var(--text-body); }
+        .learn-list li { margin-bottom: 4px; }
+
+        .result-box { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-size: 0.9rem; font-weight: 600; color: var(--primary-dark); }
+        .result-score { background: var(--primary); color: white; padding: 2px 8px; border-radius: 5px; font-size: 0.8rem; }
+
+        .course-btn {
+            text-decoration: none;
+            padding: 10px 0;
+            border-radius: 8px;
+            background: var(--bg-body);
+            border: 1px solid var(--border);
+            color: var(--text-body);
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            display: block;
+            margin-top: auto;
+        }
+        .course-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* --- CONTACT SECTION STYLES --- */
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+        .contact-card { 
+            padding: 40px; background: var(--bg-surface); border-radius: 25px; 
+            border: 1px solid var(--border); box-shadow: var(--shadow); 
+            backdrop-filter: blur(10px); position: relative; overflow: hidden;
+        }
+        .contact-info-list { margin-bottom: 30px; }
+        .contact-item { display: flex; gap: 15px; margin-bottom: 20px; align-items: center; }
+        .c-icon { width: 45px; height: 45px; background: rgba(16, 185, 129, 0.1); border-radius: 12px; display: flex; justify-content: center; align-items: center; color: var(--primary); font-size: 1.2rem; flex-shrink: 0; }
+        .social-ecosystem { margin-top: 20px; }
+        .social-label { font-size: 0.9rem; font-weight: 700; color: var(--text-main); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; display: block; }
+        .social-grid-wrapper { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; }
+        .social-icon-btn { width: 50px; height: 50px; background: var(--bg-body); border: 1px solid var(--border); border-radius: 15px; display: flex; justify-content: center; align-items: center; font-size: 1.3rem; color: var(--text-body); text-decoration: none; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; }
+        .social-icon-btn:hover { transform: translateY(-5px) scale(1.1); background: var(--bg-surface); box-shadow: 0 10px 20px rgba(0,0,0,0.1); color: var(--primary); border-color: var(--primary); }
+        .social-icon-btn::after { content: attr(data-tooltip); position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); background: var(--text-body); color: var(--bg-surface); font-size: 0.7rem; padding: 4px 8px; border-radius: 5px; white-space: nowrap; opacity: 0; pointer-events: none; transition: 0.3s; }
+        .social-icon-btn:hover::after { opacity: 1; bottom: -35px; }
+        .form-input { width: 100%; padding: 15px; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 15px; background: var(--bg-surface); color: var(--text-body); transition: 0.3s; }
+        .form-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1); }
+        .send-btn { width: 100%; padding: 15px; background: var(--gradient-primary); border: none; border-radius: 12px; color: white; font-weight: 700; cursor: pointer; font-size: 1rem; }
+        .send-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3); }
+
+        /* --- CHATBOT WIDGET STYLES --- */
+        .chat-widget-btn { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--gradient-primary); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; cursor: pointer; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 9999; animation: bounceIn 1s ease; }
+        .chat-window { position: fixed; bottom: 100px; right: 30px; width: 350px; height: 450px; background: var(--chat-bg); border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden; z-index: 9998; border: 1px solid var(--border); transform: scale(0); opacity: 0; transform-origin: bottom right; }
+        .chat-window.open { transform: scale(1); opacity: 1; }
+        .chat-header { background: var(--gradient-primary); padding: 15px; color: white; display: flex; align-items: center; justify-content: space-between; }
+        .chat-title { font-weight: 700; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+        .chat-body { flex-grow: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .chat-msg { max-width: 80%; padding: 10px 15px; border-radius: 15px; font-size: 0.9rem; line-height: 1.4; }
+        .bot-msg { background: rgba(16, 185, 129, 0.15); color: var(--text-body); align-self: flex-start; border-bottom-left-radius: 2px; border: 1px solid var(--border); }
+        .user-msg { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+        .chat-input-area { padding: 10px; border-top: 1px solid var(--border); display: flex; gap: 10px; background: var(--bg-surface); }
+        .chat-input { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 20px; outline: none; background: var(--chat-bg); color: var(--text-body); }
+        .chat-send { background: none; border: none; color: var(--primary); font-size: 1.2rem; cursor: pointer; }
+        @keyframes bounceIn { 0%{transform: scale(0);} 50%{transform: scale(1.1);} 100%{transform: scale(1);} }
+        @media (max-width: 900px) { .hero { flex-direction: column-reverse; text-align: center; padding-top: 100px; } .contact-grid { grid-template-columns: 1fr; } .grid-10 { grid-template-columns: 1fr; } .chat-window { width: 90%; right: 5%; bottom: 100px; } .social-grid-wrapper { grid-template-columns: repeat(4, 1fr); } }
+    </style>
+</head>
+<body data-theme="light">
+
+    <div class="bg-art"></div>
+    <div class="bg-overlay"></div>
+
+    <nav>
+        <div class="logo"><i class="fas fa-heartbeat"></i> DARSHANA.BIO</div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#competencies">Expertise</a>
+            <a href="#projects">Projects</a>
+            <a href="#journey">Journey</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="theme-btn" onclick="toggleTheme()"><i class="fas fa-moon" id="themeIcon"></i></div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <span class="hero-tag">Biomedical Technologist</span>
+            <h1>S.M. Darshana <br><span class="text-gradient">Sooriya Bandara</span></h1>
+            <p>Bridging the gap between <strong>Indigenous Health Sciences</strong> and <strong>Modern Engineering</strong>. Specializing in Sensors, IoT, and Microcontrollers.</p>
+            <div class="read-more-wrapper">
+                <button class="read-btn" onclick="toggleReadMore()" id="readBtn">Read Full Bio <i class="fas fa-arrow-down"></i></button>
+                <div id="bioContent" class="hidden-content">
+                    <p>I am an undergraduate at the <strong>Gampaha Wickramarachchi University of Indigenous Medicine</strong>. My technical journey includes building <strong>EMG circuits with Arduino</strong>, achieving excellence in Biosystems Tech (A-Level), and earning an NVQ Level 4 in English.</p>
+                </div>
+            </div>
+            <div style="display:flex; gap:15px; margin-top:20px; flex-wrap: wrap;">
+                <a href="#competencies" class="send-btn" style="width: auto; padding: 12px 35px;">View Expertise</a>
+                <a href="Orange and Black Modern Graphic Designer Resume A4.pdf" download="Darshana_CV.pdf" class="send-btn" style="width: auto; padding: 12px 35px; background: rgba(255,255,255,0.8); color: var(--primary); border: 2px solid var(--primary);">
+                    Download CV <i class="fas fa-download"></i>
+                </a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <img src="imagesalex-profile.jpg" alt="Darshana Profile" class="profile-img">
+            <div class="bubble-badge">
+                <img src="bubble.png" alt="University Crest">
+            </div>
+            <a href="Green and White Creative Medical Business Card.gif" download="Darshana_Digital_Card.gif" class="card-badge" title="Click to Download My Card">
+                <img src="Green and White Creative Medical Business Card.gif" alt="BioMedical Tech Consultant Card">
+                <div class="card-tooltip"><i class="fas fa-download"></i> Save Card</div>
+            </a>
+        </div>
+    </section>
+
+    <section id="competencies" class="section">
+        <div class="sec-head">
+            <h2>Core Competencies</h2>
+            <div class="line"></div>
+            <p style="margin-top: 15px;">Explore my technical expertise. Click on any card to view detailed subtopics.</p>
+        </div>
+
+        <div class="grid-10">
+            <div class="tech-card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1591405351990-4726e331f141?q=80&w=600" class="card-img" alt="Microprocessor">
+                </div>
+                <h3>Microprocessors</h3>
+                <p>Constructed EMG circuits using Arduino Uno and developed real-time logic via Arduino IDE.</p>
+                <button class="card-btn" onclick="openModal('micro')">View Subtopics <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="tech-card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=400" class="card-img" alt="Biomechanics">
+                </div>
+                <h3>Biomechanics</h3>
+                <p>Application of mechanical principles to biological systems, prosthetics, and rehabilitation engineering.</p>
+                <button class="card-btn" onclick="openModal('biomech')">View Subtopics <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="tech-card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=400" class="card-img" alt="Biochemistry">
+                </div>
+                <h3>Biochemistry</h3>
+                <p>Hands-on lab techniques: Enzymatic reactions, ELISA, Spectrophotometry, and metabolic analysis.</p>
+                <button class="card-btn" onclick="openModal('biochem')">View Subtopics <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="tech-card">
+                <div class="card-img-wrapper">
+                    <img src="sensors.jpg" class="card-img" alt="Sensors">
+                </div>
+                <h3>Chemical & Bio-Sensors</h3>
+                <p>Development of non-invasive sensors for glucose, pulse, and physiological monitoring.</p>
+                <button class="card-btn" onclick="openModal('sensors')">View Subtopics <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="tech-card">
+                <div class="card-img-wrapper">
+                    <img src="instruments.jpg" class="card-img" alt="Instrumentation">
+                </div>
+                <h3>Medical Instrumentation</h3>
+                <p>Calibration, error analysis, maintenance, and safety testing of hospital diagnostic equipment.</p>
+                <button class="card-btn" onclick="openModal('instru')">View Subtopics <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="tech-card">
+                <div class="card-img-wrapper">
+                    <img src="tissue.jpg" class="card-img" alt="Tissue Engineering">
+                </div>
+                <h3>Tissue Engineering</h3>
+                <p>Design of scaffolds, biocompatible materials, and cell culture for regenerative medicine.</p>
+                <button class="card-btn" onclick="openModal('tissue')">View Subtopics <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="tech-card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1628595351029-c2bf17511435?q=80&w=600" class="card-img" alt="Nanotech">
+                </div>
+                <h3>Nanomaterials</h3>
+                <p>Utilization of nanoparticles for targeted drug delivery and enhanced high-sensitivity biosensing.</p>
+                <button class="card-btn" onclick="openModal('nano')">View Subtopics <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="tech-card">
+                <div class="card-img-wrapper">
+                    <img src="data.jpg" class="card-img" alt="Data Communication">
+                </div>
+                <h3>Data Communication</h3>
+                <p>Management of Hospital Information Systems (HIS), DICOM standards, and medical data protocols.</p>
+                <button class="card-btn" onclick="openModal('data')">View Subtopics <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="tech-card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=400" class="card-img" alt="Coding">
+                </div>
+                <h3>Web App Development</h3>
+                <p>Full-stack development for telemedicine portals, patient databases, and IoT interfaces.</p>
+                <button class="card-btn" onclick="openModal('web')">View Subtopics <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="tech-card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?q=80&w=600" class="card-img" alt="CAD">
+                </div>
+                <h3>3D Sim & CAD</h3>
+                <p>Design of medical device housings, 3D modeling, and simulation of fluid dynamics.</p>
+                <button class="card-btn" onclick="openModal('cad')">View Subtopics <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section">
+        <div class="sec-head">
+            <h2>Featured Projects</h2>
+            <div class="line"></div>
+            <p style="margin-top: 15px;">Practical applications of my research and technical skills.</p>
+        </div>
+
+        <div class="grid-10" style="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));">
+            <div class="tech-card">
+                <div class="card-img-wrapper">
+                    <img src="arduino.jpg" class="card-img" alt="Arduino Circuit">
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <span style="font-size:0.8rem; background:rgba(16, 185, 129, 0.1); color:var(--primary); padding:4px 10px; border-radius:15px; font-weight:700;">Hardware</span>
+                    <span style="font-size:0.8rem; color:var(--text-body); opacity:0.7;"><i class="fas fa-calendar"></i> 2023</span>
+                </div>
+                <h3>Arduino EMG Biosensor</h3>
+                <p>Designed a circuit to detect muscle electrical activity. Filtered noise using High-pass/Low-pass filters and visualized data via Serial Plotter.</p>
+                <div style="margin-top:auto;">
+                    <button class="card-btn">View Circuit Diagram <i class="fas fa-external-link-alt"></i></button>
+                </div>
+            </div>
+            <div class="tech-card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=400" class="card-img" alt="Database">
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <span style="font-size:0.8rem; background:rgba(6, 182, 212, 0.1); color:var(--accent); padding:4px 10px; border-radius:15px; font-weight:700;">Software</span>
+                    <span style="font-size:0.8rem; color:var(--text-body); opacity:0.7;"><i class="fas fa-calendar"></i> 2024</span>
+                </div>
+                <h3>Patient Record System</h3>
+                <p>A web-based concept for storing patient history securely. Built using HTML/JS and mock SQL database structures.</p>
+                <div style="margin-top:auto;">
+                    <button class="card-btn">View Source Code <i class="fab fa-github"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal-overlay" id="infoModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <h2 class="modal-title" id="mTitle">Topic Title</h2>
+            <div class="modal-subtitle">Areas Covered & Key Technologies</div>
+            <ul class="topic-list" id="mList"></ul>
+        </div>
+    </div>
+
+    <section id="journey" class="section">
+        <div class="sec-head">
+            <h2>My Journey</h2>
+            <div class="line"></div>
+        </div>
+        <div class="journey-box">
+            <div class="accord-item">
+                <div class="accord-head" onclick="toggleAccord(this)"><span><i class="fas fa-university"></i> Academic Background</span> <i class="fas fa-chevron-down"></i></div>
+                <div class="accord-body">
+                    <p><strong>University:</strong> Gampaha Wickramarachchi University of Indigenous Medicine.</p>
+                    <p><strong>A-Levels:</strong> Biosystems Technology (A), Science for Tech (B), ICT (C) with Z-Score 1.4382.</p>
+                    <p><strong>Secondary School:</strong> Walisinghe Harischandra College, Anuradhapura.</p>
+                </div>
+            </div>
+            <div class="accord-item">
+                <div class="accord-head" onclick="toggleAccord(this)"><span><i class="fas fa-certificate"></i> Certifications & Projects</span> <i class="fas fa-chevron-down"></i></div>
+                <div class="accord-body">
+                    <p><strong>English Proficiency:</strong> NVQ Level 4 - Anuradhapura College of Technology.</p>
+                    <p><strong>Research Project:</strong> Construction of EMG circuits using Arduino Uno.</p>
+                </div>
+            </div>
+            <div class="accord-item">
+                <div class="accord-head" onclick="toggleAccord(this)"><span><i class="fas fa-users"></i> Leadership</span> <i class="fas fa-chevron-down"></i></div>
+                <div class="accord-body">
+                    <p>Active member of the Biomedical Technology Society.</p>
+                    <p>Organized health camps and awareness programs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="learning" class="section">
+        <div class="sec-head">
+            <h2>Academic Learning Hub</h2>
+            <div class="line"></div>
+            <p style="margin-top: 15px;">Access the online resources and courses that shaped my academic journey, with my key takeaways.</p>
+        </div>
+
+        <div class="grid-10" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px;">
+            <div class="course-card">
+                <div class="course-visual">
+                    <img src="https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=400" alt="Biomedical Engineering">
+                </div>
+                <span class="course-badge badge-bio">Biomedical Engineering</span>
+                <div class="course-title">Intro to Bioengineering</div>
+                
+                <div class="learn-list">
+                    <h4>What I Learned:</h4>
+                    <ul>
+                        <li>Solving complex engineering problems in medicine.</li>
+                        <li>Design of medical devices (prosthetics/imaging).</li>
+                        <li>Electrical safety standards (IEC 60601).</li>
+                    </ul>
+                </div>
+                <div class="result-box">
+                    <span>Final Grade:</span> <span class="result-score">A (Distinction)</span>
+                </div>
+
+                <a href="https://ocw.mit.edu/courses/biological-engineering/" target="_blank" class="course-btn">Access Course <i class="fas fa-external-link-alt"></i></a>
+            </div>
+
+            <div class="course-card">
+                <div class="course-visual">
+                    <img src="networking.jpg" alt="Networking">
+                </div>
+                <span class="course-badge badge-ict">ICT & Networking</span>
+                <div class="course-title">Data Networking Basics</div>
+                
+                <div class="learn-list">
+                    <h4>What I Learned:</h4>
+                    <ul>
+                        <li>TCP/IP Stack & OSI Model layers.</li>
+                        <li>Network topology design & debugging tools.</li>
+                        <li>Security protocols for data transmission.</li>
+                    </ul>
+                </div>
+                <div class="result-box">
+                    <span>Project Score:</span> <span class="result-score">92%</span>
+                </div>
+
+                <a href="https://www.coursera.org/learn/computer-networking" target="_blank" class="course-btn">Access Course <i class="fas fa-external-link-alt"></i></a>
+            </div>
+
+            <div class="course-card">
+                <div class="course-visual">
+                    <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=400" alt="Tissue Engineering">
+                </div>
+                <span class="course-badge badge-bio">Tissue Engineering</span>
+                <div class="course-title">Regenerative Medicine</div>
+                
+                <div class="learn-list">
+                    <h4>What I Learned:</h4>
+                    <ul>
+                        <li>Scaffold fabrication & biocompatibility.</li>
+                        <li>Stem cell culture techniques.</li>
+                        <li>Regulatory issues in tissue products.</li>
+                    </ul>
+                </div>
+                <div class="result-box">
+                    <span>Lab Assessment:</span> <span class="result-score">Pass with Merit</span>
+                </div>
+
+                <a href="https://www.edx.org/learn/tissue-engineering" target="_blank" class="course-btn">Access Course <i class="fas fa-external-link-alt"></i></a>
+            </div>
+
+            <div class="course-card">
+                <div class="course-visual">
+                    <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=400" alt="Biochemistry">
+                </div>
+                <span class="course-badge badge-sci">Biochemistry</span>
+                <div class="course-title">Principles of Biochemistry</div>
+                
+                <div class="learn-list">
+                    <h4>What I Learned:</h4>
+                    <ul>
+                        <li>Enzyme kinetics & metabolic pathways.</li>
+                        <li>DNA sequencing & protein structure.</li>
+                        <li>Spectrophotometry analysis methods.</li>
+                    </ul>
+                </div>
+                <div class="result-box">
+                    <span>Final Exam:</span> <span class="result-score">A-</span>
+                </div>
+
+                <a href="https://pll.harvard.edu/subject/biochemistry" target="_blank" class="course-btn">Access Course <i class="fas fa-external-link-alt"></i></a>
+            </div>
+
+            <div class="course-card">
+                <div class="course-visual">
+                    <img src="https://images.unsplash.com/photo-1530210124550-912dc1381cb8?q=80&w=400" alt="Anatomy">
+                </div>
+                <span class="course-badge badge-sci">Anatomy & Physiology</span>
+                <div class="course-title">Human Anatomy</div>
+                
+                <div class="learn-list">
+                    <h4>What I Learned:</h4>
+                    <ul>
+                        <li>Homeostasis & organ system integration.</li>
+                        <li>Musculoskeletal mechanics.</li>
+                        <li>Pathophysiology of common diseases.</li>
+                    </ul>
+                </div>
+                <div class="result-box">
+                    <span>Practical:</span> <span class="result-score">Completed</span>
+                </div>
+
+                <a href="https://www.khanacademy.org/science/health-and-medicine/human-anatomy-and-physiology" target="_blank" class="course-btn">Access Course <i class="fas fa-external-link-alt"></i></a>
+            </div>
+
+            <div class="course-card">
+                <div class="course-visual">
+                    <img src="phycology.jpg" alt="Psychology">
+                </div>
+                <span class="course-badge badge-ict">Psychology</span>
+                <div class="course-title">Intro to Psychology</div>
+                
+                <div class="learn-list">
+                    <h4>What I Learned:</h4>
+                    <ul>
+                        <li>Cognitive processes: Memory & Perception.</li>
+                        <li>Behavioral neuroscience basics.</li>
+                        <li>Research methods in social sciences.</li>
+                    </ul>
+                </div>
+                <div class="result-box">
+                    <span>Certificate:</span> <span class="result-score">Verified</span>
+                </div>
+
+                <a href="https://oyc.yale.edu/psychology/psyc-110" target="_blank" class="course-btn">Access Course <i class="fas fa-external-link-alt"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <div class="sec-head">
+            <h2>Get In Touch</h2>
+            <div class="line"></div>
+        </div>
+        
+        <div class="contact-grid">
+            <div class="contact-card">
+                <h3>Let's Connect</h3>
+                <p style="margin-bottom: 25px; opacity: 0.8; font-size: 0.95rem;">I am available for collaborations in Biomedical Tech.</p>
+                
+                <div class="contact-info-list">
+                    <div class="contact-item">
+                        <div class="c-icon"><i class="fas fa-envelope"></i></div>
+                        <div><label style="font-size:0.8rem; opacity:0.7; font-weight:700; text-transform:uppercase;">Email</label><br><strong>darshanabandara2003@gmail.com</strong></div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="c-icon"><i class="fas fa-phone-alt"></i></div>
+                        <div><label style="font-size:0.8rem; opacity:0.7; font-weight:700; text-transform:uppercase;">Phone</label><br><strong>072 848 9854</strong></div>
+                    </div>
+                </div>
+
+                <div class="social-ecosystem">
+                    <span class="social-label">Social Ecosystem</span>
+                    <div class="social-grid-wrapper">
+                        <a href="https://www.linkedin.com/in/darshana-sooriya-bandara-64b3883a1" target="_blank" class="social-icon-btn" data-tooltip="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.facebook.com/share/17dmEPtp5t/" target="_blank" class="social-icon-btn" data-tooltip="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://wa.me/940762982243" target="_blank" class="social-icon-btn" data-tooltip="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="social-icon-btn" data-tooltip="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-icon-btn" data-tooltip="TikTok"><i class="fab fa-tiktok"></i></a>
+                        
+                        <a href="#" class="social-icon-btn" data-tooltip="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon-btn" data-tooltip="X"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#" class="social-icon-btn" data-tooltip="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon-btn" data-tooltip="Reddit"><i class="fab fa-reddit-alien"></i></a>
+                        <a href="#" class="social-icon-btn" data-tooltip="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-card">
+                <h3>Drop a Message</h3>
+                <p style="margin-bottom: 25px; opacity: 0.8; font-size: 0.95rem;">Have a question or proposal? Reach out below.</p>
+                
+                <form action="https://formspree.io/f/YOUR_FORM_ID_HERE" method="POST">
+                    <input type="text" name="name" class="form-input" placeholder="Your Name" required>
+                    <input type="email" name="email" class="form-input" placeholder="Your Email" required>
+                    <textarea name="message" class="form-input" rows="5" placeholder="How can I help you?" required></textarea>
+                    <button type="submit" class="send-btn">Send Message <i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <div class="chat-widget-btn" onclick="toggleChat()">
+        <i class="fas fa-robot"></i>
+    </div>
+    
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <div class="chat-title"><i class="fas fa-brain"></i> BioMed AI Assistant</div>
+            <i class="fas fa-times" style="cursor:pointer;" onclick="toggleChat()"></i>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="chat-msg bot-msg">
+                Hello! I am Darshana's AI assistant. Ask me about <strong>Sensors, Arduino, Tissue Engineering</strong>, or <strong>Biomedical Science</strong>!
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" class="chat-input" placeholder="Ask a question..." onkeypress="handleEnter(event)">
+            <button class="chat-send" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script>
+        // THEME TOGGLE
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('themeIcon');
+            if(body.getAttribute('data-theme') === 'dark') {
+                body.setAttribute('data-theme', 'light');
+                icon.classList.remove('fa-sun'); icon.classList.add('fa-moon');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                icon.classList.remove('fa-moon'); icon.classList.add('fa-sun');
+            }
+        }
+
+        // READ MORE TOGGLE
+        function toggleReadMore() {
+            const content = document.getElementById('bioContent');
+            const btn = document.getElementById('readBtn');
+            if (content.style.display === "block") {
+                content.style.display = "none";
+                btn.innerHTML = 'Read Full Bio <i class="fas fa-arrow-down"></i>';
+            } else {
+                content.style.display = "block";
+                btn.innerHTML = 'Show Less <i class="fas fa-arrow-up"></i>';
+            }
+        }
+
+        // ACCORDION
+        function toggleAccord(el) {
+            const body = el.nextElementSibling;
+            body.classList.toggle('active');
+            const icon = el.querySelector('.fa-chevron-down');
+            if(body.classList.contains('active')) icon.style.transform = "rotate(180deg)";
+            else icon.style.transform = "rotate(0deg)";
+        }
+
+        // --- MODAL DATA ---
+        const contentData = {
+            'micro': ["Arduino & PIC Microcontroller Architecture", "Analog-to-Digital Conversion (ADC)", "Interrupt Handling", "Low-power Design", "Real-time Signal Processing"],
+            'biomech': ["Gait Analysis & Motion Kinematics", "Prosthetic Limb Design Principles", "Stress/Strain Analysis", "Rehabilitation Robotics", "Ergonomics"],
+            'biochem': ["Enzymatic Reactions", "Spectrophotometry", "ELISA Techniques", "Metabolic Pathway Analysis", "Biosafety Protocols"],
+            'sensors': ["Electrochemical Transducers", "Piezoelectric Sensors", "Optical Biosensors (SPR)", "Signal Conditioning", "Wearable Integration"],
+            'instru': ["Biopotential Amplifiers (ECG/EEG)", "Electrical Safety (IEC 60601)", "Medical Imaging Hardware", "Therapeutic Devices", "Calibration & Maintenance"],
+            'tissue': ["3D Bioprinting", "Stem Cell Culture", "Biocompatibility Testing (ISO 10993)", "Artificial Organs", "Regenerative Medicine"],
+            'nano': ["Targeted Drug Delivery", "Gold Nanoparticles", "Carbon Nanotubes", "Microfluidics", "Nanotoxicity"],
+            'data': ["Hospital Information Systems (HIS)", "DICOM Standards", "HL7 Protocols", "Cybersecurity in Health", "Cloud Computing"],
+            'web': ["Full-Stack Development", "UI/UX Design", "Database Management", "API Integration", "Mobile Responsiveness"],
+            'cad': ["3D Modeling (SolidWorks)", "Finite Element Analysis (FEA)", "Computational Fluid Dynamics", "PCB Layout Design", "Rapid Prototyping"]
+        };
+
+        function openModal(key) {
+            const modal = document.getElementById('infoModal');
+            const title = document.getElementById('mTitle');
+            const list = document.getElementById('mList');
+            const titles = { 'micro': 'Microprocessors', 'biomech': 'Biomechanics', 'biochem': 'Biochemistry', 'sensors': 'Chemical & Bio-Sensors', 'instru': 'Medical Instrumentation', 'tissue': 'Tissue Engineering', 'nano': 'Nanomaterials', 'data': 'Data Communication', 'web': 'Web App Development', 'cad': '3D Sim & CAD' };
+            title.innerText = titles[key];
+            list.innerHTML = ""; 
+            contentData[key].forEach(item => { let li = document.createElement('li'); li.innerText = item; list.appendChild(li); });
+            modal.classList.add('active');
+        }
+
+        function closeModal() { document.getElementById('infoModal').classList.remove('active'); }
+        window.onclick = function(event) { if (event.target == document.getElementById('infoModal')) closeModal(); }
+
+        // SCROLL OBSERVER
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => { if (entry.isIntersecting) entry.target.classList.add('show-scroll'); });
+        });
+        document.querySelectorAll('.tech-card, .sec-head, .hero-content, .contact-card, .accord-item').forEach((el) => {
+            el.classList.add('hidden-scroll'); observer.observe(el);
+        });
+
+        // --- CHATBOT LOGIC ---
+        function toggleChat() {
+            document.getElementById('chatWindow').classList.toggle('open');
+        }
+
+        function handleEnter(e) {
+            if(e.key === 'Enter') sendMessage();
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim().toLowerCase();
+            const body = document.getElementById('chatBody');
+
+            if(text === "") return;
+
+            // Add User Message
+            const userDiv = document.createElement('div');
+            userDiv.className = 'chat-msg user-msg';
+            userDiv.innerText = input.value;
+            body.appendChild(userDiv);
+            input.value = "";
+            body.scrollTop = body.scrollHeight;
+
+            // AI Logic Delay
+            setTimeout(() => {
+                let response = "I'm not sure about that. Try asking about sensors, EMG, or Biomedical Engineering!";
+                
+                if(text.includes('hello') || text.includes('hi')) {
+                    response = "Hello! I am ready to discuss Biomedical Technology. How can I assist you?";
+                } else if(text.includes('sensor')) {
+                    response = "Biosensors convert a biological response into an electrical signal. Key types include electrochemical, optical, and piezoelectric sensors.";
+                } else if(text.includes('arduino') || text.includes('micro')) {
+                    response = "Arduino is widely used in biomedical prototyping for data acquisition from sensors like pulse, EMG, and temperature modules.";
+                } else if(text.includes('emg') || text.includes('muscle')) {
+                    response = "Electromyography (EMG) measures muscle response or electrical activity. My featured project uses an Arduino with High/Low pass filters to capture this.";
+                } else if(text.includes('tissue') || text.includes('cell')) {
+                    response = "Tissue Engineering involves combining scaffolds, cells, and biologically active molecules into functional tissues.";
+                } else if(text.includes('job') || text.includes('work') || text.includes('hire')) {
+                    response = "Darshana is available for roles in Biomedical Tech! Please use the Contact section to get in touch.";
+                } else if(text.includes('darshana')) {
+                    response = "S.M. Darshana is a Biomedical Technologist bridging Indigenous Medicine with Modern Engineering.";
+                } else if(text.includes('biomedical')) {
+                    response = "Biomedical Engineering applies engineering principles to medicine and biology for healthcare purposes (e.g., diagnostic or therapeutic).";
+                }
+
+                const botDiv = document.createElement('div');
+                botDiv.className = 'chat-msg bot-msg';
+                botDiv.innerHTML = response;
+                body.appendChild(botDiv);
+                body.scrollTop = body.scrollHeight;
+            }, 600);
+        }
+    </script>
+</body>
+</html>
